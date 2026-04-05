@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Connection, PublicKey, LAMPORTS_PER_SOL, Transaction, SystemProgram } from '@solana/web3.js'
+import { XRWorld } from './XRWorld'
 import './App.css'
+import './xr.css'
 
 // Constants
 const SOLANA_NETWORK = 'devnet'
@@ -15,7 +17,7 @@ function App() {
   const [txSig, setTxSig] = useState<string | null>(null)
   const [vibePrompt, setVibePrompt] = useState('')
   const [generatedCode, setGeneratedCode] = useState<string | null>(null)
-  const [appView, setAppView] = useState<'pulse' | 'vibe'>('pulse')
+  const [appView, setAppView] = useState<'pulse' | 'vibe' | 'xr'>('pulse')
 
   // Wallet detection
   useEffect(() => {
@@ -162,6 +164,12 @@ export default function GeneratedApp() {
           >
             ✨ Vibe Code
           </button>
+          <button
+            className={appView === 'xr' ? 'active' : ''}
+            onClick={() => setAppView('xr')}
+          >
+            🥽 XR
+          </button>
         </nav>
       </header>
 
@@ -255,6 +263,13 @@ export default function GeneratedApp() {
                 </div>
               )}
             </div>
+          </div>
+        )}
+        {appView === 'xr' && (
+          <div className="xr-view">
+            <h1>🥽 XR World</h1>
+            <p className="tagline">AR • VR • XR — Your imagination is the limit</p>
+            <XRWorld />
           </div>
         )}
       </main>
